@@ -13,6 +13,8 @@ const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}
 });
 const basename = path.basename(__filename);
 
+//carga automatica de modelos
+
 const modelDefiners = [];
 
 fs.readdirSync(path.join(__dirname, '/models'))
@@ -28,10 +30,13 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Driver } = sequelize.models;
+const { Driver, Teams } = sequelize.models;
+
+Driver.belongsToMany(Teams, { through: "DriverTeam"});
+Teams.belongsToMany(Driver, { through: "DriverTeam"});
 
 // Aca vendrian las relaciones
-// Product.hasMany(Reviews);
+// Product.hasMany(Reviews);*/
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
