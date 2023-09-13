@@ -87,8 +87,6 @@ function DriverRegistration() {
                         </option>
                         ))}
                     </select>
-
-
                 </label>
                 
                 <br/>
