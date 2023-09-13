@@ -1,7 +1,8 @@
-import { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { Route,Routes, useLocation, useNavigate } from 'react-router-dom';
 import { getTeams } from './Redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { DriverRegistration } from "./components/index";
+import { DriverRegistration, LandingPage, HomePage , DetailPage} from "./components/index";
 import './App.css';
 
 function App() {
@@ -17,17 +18,13 @@ function App() {
 
   return (
     <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <div>
-        <DriverRegistration />
+      <div className='app'>
+        <Routes>
+          <Route path='/' element={<LandingPage/>}/>
+          <Route path='/register' element={<DriverRegistration/>}/>
+          <Route path='/home' element={<HomePage/>}/>
+          <Route path='/detail/:id' element={<DetailPage/>}/>            
+        </Routes>
       </div>
     </>
   )

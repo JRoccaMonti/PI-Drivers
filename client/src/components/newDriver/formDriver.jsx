@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { services } from '../../apiHelpers/index';
+import { Link } from 'react-router-dom';
 
 function DriverRegistration() {
     const teamOptions = useSelector(state => state.teams);
@@ -38,6 +39,10 @@ function DriverRegistration() {
     };
 
     return (
+        <>
+        <Link to="/home">
+            <button>Ir a Inicio</button>
+        </Link>
         <div>
             <h2>Registrar Nuevo Conductor</h2>
             <form onSubmit={handleSubmit}>
@@ -94,6 +99,7 @@ function DriverRegistration() {
                 <button type="submit">Registrar Conductor</button>
             </form>
         </div>
+        </>
     );
 }
 
