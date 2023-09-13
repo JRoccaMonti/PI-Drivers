@@ -10,30 +10,38 @@ const { Teams } = require('../db');
 
 const storageTeams = async (req, res) => {
     try {
-        const response = await axios.get('http://localhost:5000/drivers'); // peticion get al api
-        const list = response.data; // guarda los datos
-        if (list.error) { // si es error da 404
-            return res.status(404).json({message: "Not found"});
-        };
-        
-        const teamList =new Set();
-        for (const driver of list) {
-            if (driver.teams) { // Verifica si 'teams' existe en el objeto 'driver'
-                const teams = driver.teams.split(/,\s*|\s*,/); // Divide la cadena por comas con o sin espacio
-                teams.forEach(team => {
-                    teamList.add(team.trim());
-                });
+
+        if (await Teams.count() === 0) {
+            const response = await axios.get('http://localhost:5000/drivers'); // peticion get al api
+            const list = response.data; // guarda los datos
+            if (list.error) { // si es error da 404
+                return res.status(404).json({message: "Not found"});
             };
-        };   
+            
+            const teamList =new Set();
+            for (const driver of list) {
+                if (driver.teams) { // Verifica si 'teams' existe en el objeto 'driver'
+                    const teams = driver.teams.split(/,\s*|\s*,/); // Divide la cadena por comas con o sin espacio
+                    teams.forEach(team => {
+                        teamList.add(team.trim());
+                    });
+                };
+            };
 
-        for (const teamName of teamList) {
-            const [team, created] = await Teams.findOrCreate({
-                where: { name: teamName },
-                defaults: { name: teamName },
-            });
+            for (const teamName of teamList) {
+                const [team, created] = await Teams.findOrCreate({
+                    where: { name: teamName },
+                    defaults: { name: teamName },
+                });
+            }
         }
+        
+        const teamsList = (await Teams.findAll()).map(team => ({ value: team.id, text: team.name }));
 
-        res.status(200).json(); // envia la lista de corredores
+        const teamOptions = teamsList;
+
+
+        res.status(200).json({teamsList}); // envia la lista de corredores
 
     } catch (error) {
         res.status(500).json({ message: error.message });

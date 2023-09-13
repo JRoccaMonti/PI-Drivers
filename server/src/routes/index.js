@@ -8,15 +8,9 @@ const storageTeams = require("../contolers/storageTeams");
 const router = Router();
 
 router.get('/drivers', allDrivers.allDrivers);
-
-
-
 router.get('/drivers/name', firstFifteen.firstFifteen);
-
 router.get('/drivers/:idDriver', getDetailById.detailById);
-
 router.post('/driver', registerDriver.registerDriver);
-
 router.get('/teams', storageTeams.storageTeams);
 
 

@@ -17,6 +17,7 @@ const registerDriver = async (req, res) => {
         if (await Driver.count() === 0) {
             await configureDatabaseIdStartValue();
         }
+        
 
         const {
             name,
@@ -26,11 +27,24 @@ const registerDriver = async (req, res) => {
             image,
             birthdate,
             teamId
-        } = req.body;        
+        } = req.body; 
 
-        const team = await Teams.findByPk(teamId);
+        const teams = Array.isArray(teamId) ? teamId : [teamId]; // Convierte a un array si no lo es
 
-        if (team) {
+        const teamPromises = teams.map(async (teamId) => {
+            const team = await Teams.findByPk(teamId);
+            if (team) { 
+                return team;
+            } else {
+                return null;
+            }
+        });
+
+        const resolvedTeams = await Promise.all(teamPromises);
+        const validTeams = resolvedTeams.filter((team) => team !== null);
+        console.log(req.body);
+
+        if (validTeams.length === teams.length) {
 
             const newDriver = await Driver.create({ 
             name: name ,
@@ -41,10 +55,10 @@ const registerDriver = async (req, res) => {
             birthdate: birthdate
             });
 
-            await newDriver.addTeam(team);
+            await newDriver.setTeams(validTeams);
             res.status(200).json({ message: 'Driver successfully registered' });
         } else {
-            res.status(404).json({ message: 'Team not found' });
+            res.status(404).json({ message: 'At least one of the teams was not found' });
         }
     } catch (error) {
 
