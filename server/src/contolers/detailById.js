@@ -65,9 +65,11 @@ const detailById = async (req, res) => {
       };
     };
 
+    const resul = driversWithTeams(drivers);
+    
     if (drivers) {
       // Si se encontró un conductor localmente, aplica la función driversWithTeams y devuelve el resultado como JSON.
-      return res.status(200).json(driversWithTeams(drivers));
+      return res.status(200).json({resul});
     } else {
       // Si no se encontró el conductor, devuelve un mensaje de error.
       return res.status(404).json({ message: 'Driver not found' });

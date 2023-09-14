@@ -50,7 +50,13 @@ const allDrivers = async (req, res) => {
             };
         });
 
-        const list = response.data ; // guarda los datos 
+        const list = response.data ; // guarda los datos
+
+        list.forEach((driver) => {
+            if (!driver.teams) {
+                driver.teams = '';
+            }
+        });
 
         const combinedArray = list.concat(driversWithTeams);
 
@@ -58,7 +64,7 @@ const allDrivers = async (req, res) => {
             return res.status(404).json({message: "Not found"});
         }
     
-        res.json(combinedArray); // envia la lista de corredores
+        res.status(200).json({combinedArray}); // envia la lista de corredores
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

@@ -28,13 +28,20 @@ function DriverRegistration() {
     
 
     const handleSubmit = async (event) => {
+
         event.preventDefault();
+
         try {
             console.log('Datos a enviar:', formData);
+
             const response = await services.newDriver(formData);
+
             console.log('Registro exitoso:', response);
+
         } catch (error) {
+
             console.error('Error al registrar el conductor:', error);
+            
         }
     };
 

@@ -1,11 +1,13 @@
-import DriverRegistration from "./newDriver/formDriver";
-import LandingPage from "./landingPage/landig";
-import HomePage from "./homePage/home";
-import DetailPage from "./detailPage/detail";
+import DriverRegistration from "./NewDriver/FormDriver";
+import LandingPage from "./LandingPage/Landig";
+import HomePage from "./HomePage/Home";
+import DetailPage from "./DetailPage/Detail";
+import Card from "./Cards/Card";
 
 export {
     DriverRegistration,
     LandingPage,
     HomePage,
-    DetailPage
+    DetailPage,
+    Card
 }

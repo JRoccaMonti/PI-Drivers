@@ -6,26 +6,39 @@ Estos deben ser obtenidos de la API (se evaluará que no haya hardcodeo). Luego 
 */
 
 const axios = require('axios');
-const { Teams } = require('../db');
+const { Teams , Nationality} = require('../db');
 
 const storageTeams = async (req, res) => {
     try {
 
-        if (await Teams.count() === 0) {
+        if (await Teams.count() === 0 || await Nationality.count() === 0 ) {
             const response = await axios.get('http://localhost:5000/drivers'); // peticion get al api
             const list = response.data; // guarda los datos
+
             if (list.error) { // si es error da 404
                 return res.status(404).json({message: "Not found"});
             };
-            
+
+            const nationalityList =new Set();
             const teamList =new Set();
+            
             for (const driver of list) {
                 if (driver.teams) { // Verifica si 'teams' existe en el objeto 'driver'
                     const teams = driver.teams.split(/,\s*|\s*,/); // Divide la cadena por comas con o sin espacio
+                    //const nationalitys = driver.nationality;
                     teams.forEach(team => {
                         teamList.add(team.trim());
                     });
+                    
+                    nationalityList.add(driver.nationality);
                 };
+            };
+
+            for (const nationalityName of nationalityList) {
+                const [nationality, created] = await Nationality.findOrCreate({
+                    where: { name: nationalityName },
+                    defaults: { name: nationalityName },
+                });
             };
 
             for (const teamName of teamList) {
@@ -37,11 +50,10 @@ const storageTeams = async (req, res) => {
         }
         
         const teamsList = (await Teams.findAll()).map(team => ({ value: team.id, text: team.name }));
+        const nationalitysList = (await Nationality.findAll()).map(nationality => ({ value: nationality.id, text: nationality.name }));
 
-        const teamOptions = teamsList;
 
-
-        res.status(200).json({teamsList}); // envia la lista de corredores
+        res.status(200).json({teamsList,nationalitysList}); // envia la lista de corredores
 
     } catch (error) {
         res.status(500).json({ message: error.message });

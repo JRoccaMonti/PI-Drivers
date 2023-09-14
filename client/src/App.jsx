@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Route,Routes, useLocation, useNavigate } from 'react-router-dom';
-import { getTeams } from './Redux/actions';
+import { getTeams, getDrivers } from './Redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { DriverRegistration, LandingPage, HomePage , DetailPage} from "./components/index";
 import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0);
 
   const dispatch = useDispatch();
 
-  const teams = useSelector(state => state.teams);
-
   useEffect(() => {
-    dispatch(getTeams());    
+    dispatch(getTeams());
+    dispatch(getDrivers());     
   }, []);
 
   return (

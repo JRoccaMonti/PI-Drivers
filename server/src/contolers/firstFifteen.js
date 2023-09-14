@@ -65,10 +65,6 @@ const firstFifteen = async (req, res) => {
             };
         });
 
-
-
-
-        //mover a un heper
         function filterDrivers(driver) {
             const fullName = `${driver.name.forename} ${driver.name.surname}`.toLowerCase();
             const searchTerm = name.toLowerCase();
@@ -81,7 +77,8 @@ const firstFifteen = async (req, res) => {
             return res.status(404).json({ message: 'No se encontraron conductores.' });
         }
 
-        res.status(200).json(matchingDrivers);
+        res.status(200).json({matchingDrivers});
+        
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
