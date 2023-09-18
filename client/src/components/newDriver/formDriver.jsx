@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 function DriverRegistration() {
     const teamOptions = useSelector(state => state.teams);
+    const nationalityOptions = useSelector(state => state.nationalitys);  
     const [formData, setFormData] = useState({
         name: '',
         lastname: '',
@@ -73,7 +74,14 @@ function DriverRegistration() {
                 <br/>
 
                 <label>
-                    Nacionalidad: <input type="text" name="nationality" value={formData.nationality} onChange={handleChange} />
+                    Nacionalidad: 
+                    <select name="nationality" value={formData.nationality} onChange={handleChange}>
+                    {nationalityOptions.map((option) => (
+                        <option key={option.value} value={option.text}>
+                            {option.text}
+                        </option>
+                        ))}
+                    </select>
                 </label>
                 
                 <br/>

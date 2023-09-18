@@ -53,7 +53,7 @@ const storageTeams = async (req, res) => {
         const nationalitysList = (await Nationality.findAll()).map(nationality => ({ value: nationality.id, text: nationality.name }));
 
 
-        res.status(200).json({teamsList,nationalitysList}); // envia la lista de corredores
+        res.status(200).json({teamsList,nationalitysList}); // envia las listas
 
     } catch (error) {
         res.status(500).json({ message: error.message });

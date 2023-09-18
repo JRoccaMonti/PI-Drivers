@@ -5,7 +5,7 @@ const ipEndpoint = 'http://192.168.1.83:3001/';
 
 export async function newDriver(formData) {
     try {
-
+        console.log(formData);
         const response = await axios.post(`${localEndpoint}driver`, formData);
         return response.data;
 

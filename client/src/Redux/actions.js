@@ -89,10 +89,18 @@ export const getDriversName = (name) => {
     };
 };
 
-export const applyFilter = (teams, nationality) => ({
+export const applyFilter = (teams, nationality, idFilter) => ({
     type: FILTER,
-    payload: { teams, nationality },
+    payload: { teams, nationality, idFilter},
 });
+
+export const orderCards = (tipoOrder, sentidoOrder) => {
+    return {
+      type: ORDER,
+      payload: { sentidoOrder,tipoOrder,  },
+    };
+  };
+  
 
 
 

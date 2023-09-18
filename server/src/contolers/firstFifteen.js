@@ -70,7 +70,13 @@ const firstFifteen = async (req, res) => {
             const searchTerm = name.toLowerCase();
             return fullName.includes(searchTerm) || driver.name.forename.toLowerCase().includes(searchTerm) || driver.name.surname.toLowerCase().includes(searchTerm);
         }
-          
+
+        apiDrivers.forEach((driver) => {
+            if (!driver.teams) {
+                driver.teams = 'Not Found';
+            }
+        });
+
         const matchingDrivers = [...apiDrivers.filter(filterDrivers), ...driversWithTeams].slice(0, 15);
 
         if (matchingDrivers.length === 0) {

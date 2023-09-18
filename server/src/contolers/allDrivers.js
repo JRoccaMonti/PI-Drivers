@@ -54,7 +54,7 @@ const allDrivers = async (req, res) => {
 
         list.forEach((driver) => {
             if (!driver.teams) {
-                driver.teams = '';
+                driver.teams = 'Not Found';
             }
         });
 

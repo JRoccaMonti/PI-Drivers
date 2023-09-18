@@ -33,28 +33,88 @@ const reducer = (state = initialState, action) => {
         };
 
       case FILTER:
-        const teamsFilter = action.payload.teams; // Valor ingresado por el usuario para teams
-        const nationalityFilter = action.payload.nationality; // Valor ingresado por el usuario para nationality
-            
-        const filtered = state.drivers.filter(driver => {
-          // Dividir la cadena driver.teams en un array de equipos
-          const driverTeams = driver.teams.split(',').map(team => team.trim());
-      
-          // Verificar si al menos uno de los equipos seleccionados por el usuario está presente en driver.teams
-          return (
-            (!teamsFilter || teamsFilter === 'All' || driverTeams.includes(teamsFilter)) && // Filtrar driver.teams
-            (!nationalityFilter || nationalityFilter === 'All' || driver.nationality === nationalityFilter) // Filtrar driver.nationality
-          );
-
-        });
+          const teamsFilter = action.payload.teams; // Valor ingresado por el usuario para teams
+          const nationalityFilter = action.payload.nationality; // Valor ingresado por el usuario para nationality
+          const idFilter = action.payload.idFilter; // Valor ingresado por el usuario para idFilter
+        
+          const filtered = state.drivers.filter(driver => {
+            // Dividir la cadena driver.teams en un array de equipos
+            const driverTeams = driver.teams.split(',').map(team => team.trim());
+        
+            // Verificar si al menos uno de los equipos seleccionados por el usuario está presente en driver.teams
+            const teamsMatch =
+              (!teamsFilter || teamsFilter === 'All' || driverTeams.includes(teamsFilter));
+        
+            // Filtrar por nationality
+            const nationalityMatch =
+              (!nationalityFilter || nationalityFilter === 'All' || driver.nationality === nationalityFilter);
+        
+            // Filtrar por idFilter
+            const idMatch =
+              (!idFilter || idFilter === 'All' || // Si idFilter es 'All', incluir todos los elementos
+                (idFilter === 'API' && driver.id >= 1 && driver.id <= 509) || // Si idFilter es 'API', incluir de 1 a 509
+                (idFilter === 'DB' && driver.id >= 510)); // Si idFilter es 'DB', incluir desde 510 en adelante
+        
+            return teamsMatch && nationalityMatch && idMatch;
+          });
           
+          return {
+            ...state,
+            filteredDrivers: filtered // La estructura de filtered coincide con la estructura original de state.drivers
+          };
+        
+      case ORDER:
+        const orderDrivers = [...state.filteredDrivers];
+        const tipo = action.payload.tipoOrder;
+        const sentido = action.payload.sentidoOrder;
+
+
+        switch (tipo) {
+          case "alfabetico":
+            switch (sentido) {
+              case "A":
+                orderDrivers.sort((a, b) => {
+                  const nameA= a.name && a.name.surname ? a.name.surname : a.lastname;
+                  const nameB= b.name && b.name.surname ? b.name.surname : b.lastname;
+                  return nameA.localeCompare(nameB);
+                });
+                break;
+              case "D":
+                orderDrivers.sort((a, b) => {
+                  const nameA= a.name && a.name.surname ? a.name.surname : a.lastname;
+                  const nameB= b.name && b.name.surname ? b.name.surname : b.lastname;
+                  return nameB.localeCompare(nameA);
+                });
+                break;
+              default:
+                break;
+            }
+            break;
+          case "nacimiento":
+            switch (sentido) {
+              case "A":
+                orderDrivers.sort((a, b) => {
+                  const dateA = a.dob || a.birthdate;
+                  const dateB = b.dob || b.birthdate;
+                  return new Date(dateA) - new Date(dateB);
+                });
+                break;
+              case "D":
+                orderDrivers.sort((a, b) => {
+                  const dateA = a.dob || a.birthdate;
+                  const dateB = b.dob || b.birthdate;
+                  return new Date(dateB) - new Date(dateA);
+                });
+                break;
+            }          
+            break;        
+          default:
+            break;
+        }
         return {
           ...state,
-          filteredDrivers: filtered // La estructura de filtered coincide con la estructura original de state.drivers
-        };
-          
-      
-
+          filteredDrivers: orderDrivers,
+        };   
       default: return {...state};
     }
   };
