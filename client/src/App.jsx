@@ -1,18 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Route,Routes, useLocation, useNavigate } from 'react-router-dom';
-import { getTeams, getDrivers } from './Redux/actions';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { Route,Routes} from 'react-router-dom';
 import { DriverRegistration, LandingPage, HomePage , DetailPage ,Nav} from "./components/index";
 import './App.css';
 
 function App() {
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getTeams());
-    dispatch(getDrivers());     
-  }, []);
 
   return (
     <>

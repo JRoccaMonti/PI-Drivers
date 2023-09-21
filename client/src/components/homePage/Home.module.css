@@ -1,0 +1,114 @@
+button:disabled {
+    display: none;
+}
+.containerBox{
+    margin-top: 1%;
+    width: 100%;
+}
+.filter{
+    width: 0; /* Inicialmente, el menú está oculto */
+    height: 100%;
+    background-color: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: width 0.15s ease; /* Animación de apertura/cierre */
+    overflow-x: hidden;
+    padding-top: 20px;
+    z-index: 999;
+    text-align: left;
+}
+
+.filter.visible {
+    width: 250px; /* Ancho del menú cuando está abierto */
+  }
+.box1{
+    grid-area: body;
+    display: grid;
+    grid:
+        "header" auto
+        "main" auto
+        / 1fr;
+    gap: 8px;
+}
+.filterOrder{
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+}
+.filteTipe{
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+}
+
+
+
+
+
+/* targetas*/
+
+.pag{
+    grid-area: header;
+}
+
+.card_box{
+    grid-area: main;
+    place-items: center;
+    width: 100%;
+    display: grid;
+    grid-template-rows: repeat(2, 350px);
+    grid-template-columns: repeat(5, 250px);
+}
+.card_littlebox{
+    transform: scale(0.75);
+}
+
+@media (max-width:1919px) {
+    .card_box{
+        grid-area: main;
+        grid-template-rows: repeat(5, 460px);
+        grid-template-columns: repeat(2, auto);
+    }
+    .card_littlebox{
+        transform: scale(0.75);
+        height: 480px;
+        justify-self: center;
+        margin: 0;
+    }
+}
+@media (max-width:700px) {
+    .card_box{
+        grid-area: main;
+        grid-template-rows: repeat(5, 260px);
+        grid-template-columns: repeat(2, 200px);
+    }
+    .card_littlebox{
+        transform: scale(0.50);
+        height: 480px;
+        justify-self: center;
+        margin: 0;
+    }
+    .pageButtonTen{
+        display: none;
+    }
+}
+@media (max-width:400px) {
+    .card_box{
+        grid-area: main;
+        grid-template-rows: repeat(5, 260px);
+        grid-template-columns: repeat(2, 200px);
+    }
+    .card_littlebox{
+        transform: scale(0.50);
+        height: 480px;
+        justify-self: center;
+        margin: 0;
+    }
+    .pageButtonTen{
+        display: none;
+    }
+    .pageButtonFive{
+        display: none;
+    }
+}

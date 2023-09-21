@@ -7,6 +7,7 @@ const ip = '192.168.1.83';
 
 conn.sync({ force: true }).then(() => {
 
+
   server.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
   })

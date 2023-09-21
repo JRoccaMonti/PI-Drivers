@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import style from "./Card.module.css";
+import { NavLink } from 'react-router-dom';
 
 function Card({driver}) { 
 
     return (
-        <div>
+        <div className={style.container}>
             <div>
-                <img src={typeof driver.image === 'object' ? driver.image.url : driver.image}/>
-            </div>
-            <ul>
-                <li>Apellido: {driver.lastname || (driver.name && driver.name.surname) || "No contenido en data.js"}</li>
-                  
-                <li>Nombre: {typeof driver.name === 'object' ? driver.name.forename : driver.name || 'N/A'}</li>
+                <img className={style.ima} src={typeof driver.image === 'object' ? driver.image.url : driver.image}/>
 
-                <li >teams: {driver.teams || "No contenido en data.js"}</li>
-            </ul>
+                <NavLink to={`/detail/${driver.id}`} >
+                    <p>{typeof driver.name === 'object' ? driver.name.forename : driver.name || 'N/A'} {driver.lastname || (driver.name && driver.name.surname) || "No contenido en data.js"}</p>
+                </NavLink>
+                <p>teams: {driver.teams || "No contenido en data.js"}</p>
+
+            </div>
         </div>
     );
 }

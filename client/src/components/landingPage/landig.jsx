@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { useDispatch, useSelector } from 'react-redux';
-
 function LandingPage() {
+  //const imageUrl = `http://localhost:3001/images/driversDB/logo.png`;
 
   return (
     <div className="landing-page">

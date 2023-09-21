@@ -83,6 +83,17 @@ const firstFifteen = async (req, res) => {
             return res.status(404).json({ message: 'No se encontraron conductores.' });
         }
 
+        matchingDrivers.forEach((driver)=>{
+            if (driver.image.url == '') {
+                driver.image.url = 'http://localhost:3001/images/driversDB/logo.png';
+                return;
+            }
+            if (driver.imagen == '') {
+                driver.imagen = 'http://localhost:3001/images/driversDB/logo.png';
+                return;
+            }
+        });
+        
         res.status(200).json({matchingDrivers});
         
     } catch (error) {

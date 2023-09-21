@@ -60,6 +60,17 @@ const allDrivers = async (req, res) => {
 
         const combinedArray = list.concat(driversWithTeams);
 
+        combinedArray.forEach((driver)=>{
+            if (driver.image.url == '') {
+                driver.image.url = 'http://localhost:3001/images/driversDB/logo.png';
+                return;
+            }
+            if (driver.imagen == '') {
+                driver.imagen = 'http://localhost:3001/images/driversDB/logo.png';
+                return;
+            }
+        });
+
         if (list.error) { // si es error da 404
             return res.status(404).json({message: "Not found"});
         }
