@@ -2,24 +2,29 @@ button:disabled {
     display: none;
 }
 .containerBox{
-    margin-top: 1%;
+    margin-top: 15px;
     width: 100%;
 }
 .filter{
     width: 0; /* Inicialmente, el menú está oculto */
     height: 100%;
-    background-color: black;
     position: fixed;
     top: 0;
-    left: 0;
+    right: 0;
     transition: width 0.15s ease; /* Animación de apertura/cierre */
     overflow-x: hidden;
-    padding-top: 20px;
     z-index: 999;
     text-align: left;
+    background: url(../../assets/wp5986721-f1-2023-logo-wallpapers.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .filter.visible {
+    padding-top: 20px;
+    padding-right: 15px;
+    padding-left: 15px;
     width: 250px; /* Ancho del menú cuando está abierto */
   }
 .box1{
@@ -33,26 +38,47 @@ button:disabled {
 }
 .filterOrder{
     display: grid;
-    grid-template-rows: repeat(4, 1fr);
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(6, 0.2fr);
+    grid-template-columns: repeat(2, 1fr);
 }
 .filteTipe{
     display: grid;
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: repeat(8, 1fr);
     grid-template-columns: repeat(1, 1fr);
+    gap: 8px;
 }
+.menuButton{
+    position: absolute;
+    right: 0;
+}
+.applyFilter{
+    margin-top: 20px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 
+}
+.Order{
+    display: grid;
+    grid-template-rows: repeat(3, 50px);
+    grid-template-columns: repeat(1, 1fr);
+    gap: 8px;
+}
 
 
 
 
 /* targetas*/
 
-.pag{
+.pagBox{
     grid-area: header;
+}
+.pag{
+    width: calc(100% - 100px);
 }
 
 .card_box{
+    margin-top: 15px;
     grid-area: main;
     place-items: center;
     width: 100%;
@@ -64,17 +90,33 @@ button:disabled {
     transform: scale(0.75);
 }
 
-@media (max-width:1919px) {
+@media (max-width:1100px) {
     .card_box{
         grid-area: main;
-        grid-template-rows: repeat(5, 460px);
-        grid-template-columns: repeat(2, auto);
+        grid-template-rows: repeat(3, 360px);
+        grid-template-columns: repeat(3, auto);
     }
     .card_littlebox{
         transform: scale(0.75);
         height: 480px;
         justify-self: center;
         margin: 0;
+    }
+}
+@media (max-width:800px) {
+    .card_box{
+        grid-area: main;
+        grid-template-rows: repeat(3, 360px);
+        grid-template-columns: repeat(3, 240px);
+    }
+    .card_littlebox{
+        transform: scale(0.6);
+        height: 480px;
+        justify-self: center;
+        margin: 0;
+    }
+    .pageButtonTen{
+        display: none;
     }
 }
 @media (max-width:700px) {
@@ -84,7 +126,7 @@ button:disabled {
         grid-template-columns: repeat(2, 200px);
     }
     .card_littlebox{
-        transform: scale(0.50);
+        transform: scale(0.6);
         height: 480px;
         justify-self: center;
         margin: 0;
@@ -92,15 +134,18 @@ button:disabled {
     .pageButtonTen{
         display: none;
     }
+    .pageButtonFive{
+        display: none;
+    }
 }
 @media (max-width:400px) {
     .card_box{
         grid-area: main;
         grid-template-rows: repeat(5, 260px);
-        grid-template-columns: repeat(2, 200px);
+        grid-template-columns: repeat(2, 190px);
     }
     .card_littlebox{
-        transform: scale(0.50);
+        transform: scale(0.575);
         height: 480px;
         justify-self: center;
         margin: 0;

@@ -1,0 +1,72 @@
+.containerBox{
+    padding: 5px;
+    margin-top: 5px;
+    width: 70vw;
+    height: 80vh;
+    display: grid;
+    grid:
+        "header header" 10%
+        "data imgbox"  80%
+        "footer footer" 5%
+        / 2fr 1fr;
+    gap: 8px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 15%;
+    background: url(../../assets/Q21yJzY-carbon-fibre-wallpaper.jpg);
+    border: solid 5px rgba(182, 50, 50, 0.515);
+}
+.titleBox{
+    grid-area: header;
+}
+.dataBox{
+    grid-area: data;
+    display: grid;
+    grid:
+        "nationBox birthdateBox teamBox" 10%
+        "descriptionBox descriptionBox descriptionBox"  80%
+        / 1fr 1fr 1fr;
+    gap: 8px;
+}
+.nationBox{
+    grid-area: nationBox;
+}
+.birthdateBox{
+    grid-area: birthdateBox;
+}
+.teamBox{
+    grid-area: teamBox;
+}
+.descriptionBox{
+    grid-area: descriptionBox;
+}
+.imgBox{
+    grid-area: imgbox;
+    border-radius: 25%;
+    overflow: hidden;
+}
+.footerBox{
+    grid-area: footer;
+}
+.imgRender{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.wikiBox{
+    position: absolute;
+    bottom: 50px;
+    left: 5%;
+    transform: translateX(-5%);
+}
+.wikiBox a{
+    text-decoration: none;
+    color: white;
+}
+.idBox{
+    position: absolute;
+    bottom: 30px;
+    right: 5%;
+    transform: translateX(-5%);
+}

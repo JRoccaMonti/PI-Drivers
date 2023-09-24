@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Card } from "../index";
-import { applyFilter, getDriversName ,getDrivers ,orderCards } from "../../Redux/actions";
+import { applyFilter, getDriversName ,getTeams ,getDrivers ,orderCards } from "../../Redux/actions";
 import style from "./Home.module.css";
 
 function HomePage() {
+  const dispatch = useDispatch();
+  
 
   //inicializando
   const [menuVisible, setMenuVisible] = useState(false);
   const teamOptions = useSelector(state => state.teams);
   const nationalityOptions = useSelector(state => state.nationalitys);  
   const filteredDrivers = useSelector(state => state.filteredDrivers);
+  
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible); // Cambia el estado para mostrar u ocultar el menú
@@ -35,7 +38,7 @@ function HomePage() {
   };
 
   // filtros
-  const dispatch = useDispatch();
+  
 
   const [selectedTeams, setSelectedTeams] = useState('All');
   const [selectedNationality, setSelectedNationality] = useState('All');
@@ -88,18 +91,16 @@ function HomePage() {
     } 
   };  
   
-  useEffect(() => {    
+  
+  const handleFilterapply = () => {
     handleFilterChange();
     handleOrderChange();
     handlePageChange(1);
-  }, [selectedNationality, selectedTeams , nameSearch ,  selectedIdFilter]);
+  };
 
-  useEffect(() => {    
-    handleFilterChange();
-    handleOrderChange();
-    handlePageChange(1);
-  }, []);
-
+  useEffect(() => {
+    handleFilterapply();
+  }, [ ]);
   
   
 
@@ -111,48 +112,10 @@ function HomePage() {
 
       <div className={`${style.filter} ${menuVisible ? style.visible : ''}`}>
 
-        <div className={style.filterOrder}>
-
-          <label htmlFor="tipoOrderSelector">Tipo de Orden:</label>          
-          <label>
-            <input type="radio" name="tipoOrden" value="alfabetico" checked={selectedTipoOrder === "alfabetico"} onChange={(event) => {
-                const newValue = event.target.value;
-                setSelectedTipoOrder(newValue);
-                handleOrderChange(newValue, selectedSentidoOrder);
-              }}/>
-            Alfabético
-          </label>
-          <label>
-            <input type="radio" name="tipoOrden" value="nacimiento" checked={selectedTipoOrder === "nacimiento"} onChange={(event) => {
-                const newValue = event.target.value;
-                setSelectedTipoOrder(newValue);
-                handleOrderChange(newValue, selectedSentidoOrder);
-              }}/>
-            Nacimiento
-          </label>     
-
-          <label htmlFor="sentidoOrderSelector">Sentido de Orden:</label>          
-          <label>
-            <input type="radio" name="sentidoOrden" value="A" checked={selectedSentidoOrder === "A"} onChange={(event) => {
-                const newValue = event.target.value;
-                setSelectedSentidoOrder(newValue);
-                handleOrderChange(selectedTipoOrder, newValue);
-              }}/>
-            Ascendente
-          </label>
-          <label>
-            <input type="radio" name="sentidoOrden" value="D" checked={selectedSentidoOrder === "D"} onChange={(event) => {
-                const newValue = event.target.value;
-                setSelectedSentidoOrder(newValue);
-                handleOrderChange(selectedTipoOrder, newValue);
-              }}/>
-            Descendente
-          </label>
-
-        </div>
-
-
         <div className={style.filteTipe}>
+
+            <label htmlFor="nameSearch">Name:</label>
+            <input type='text' id="nameSearch" value={nameSearch}  onChange={(event) => handleChange(event, 'nameSearch')}/>
           
             <label htmlFor="teamsSelector">Equipo:</label>
             <select id="teamsSelector" value={selectedTeams} onChange={(event) => handleChange(event, 'teamsSelector')}>
@@ -174,9 +137,7 @@ function HomePage() {
                 </option>
               ))}
               
-            </select>
-            
-            <input type='text' id="nameSearch" value={nameSearch}  onChange={(event) => handleChange(event, 'nameSearch')}/>
+            </select>           
             
             <label htmlFor="idFilterSelector">ID:</label>
 
@@ -187,44 +148,94 @@ function HomePage() {
             </select>
 
         </div>
-      </div>
 
+       
+
+        <div className={style.filterOrder}>
+          <div className={style.Order}>
+            <p>Order type:</p>
+            <>       
+              <label>
+                <input type="radio" name="tipoOrden" value="alfabetico" checked={selectedTipoOrder === "alfabetico"} onChange={(event) => {
+                    const newValue = event.target.value;
+                    setSelectedTipoOrder(newValue);
+                    handleOrderChange(newValue, selectedSentidoOrder);
+                  }}/>
+                Alfabético
+              </label>
+              <label>
+                <input type="radio" name="tipoOrden" value="nacimiento" checked={selectedTipoOrder === "nacimiento"} onChange={(event) => {
+                    const newValue = event.target.value;
+                    setSelectedTipoOrder(newValue);
+                    handleOrderChange(newValue, selectedSentidoOrder);
+                  }}/>
+                Nacimiento
+              </label>     
+            </> 
+          </div>
+          <div className={style.Order}>
+            <p>Sense of Order:</p>
+            <>
+              <label>
+                <input type="radio" name="sentidoOrden" value="A" checked={selectedSentidoOrder === "A"} onChange={(event) => {
+                    const newValue = event.target.value;
+                    setSelectedSentidoOrder(newValue);
+                    handleOrderChange(selectedTipoOrder, newValue);
+                  }}/>
+                Ascendente
+              </label>
+              <label>
+                <input type="radio" name="sentidoOrden" value="D" checked={selectedSentidoOrder === "D"} onChange={(event) => {
+                    const newValue = event.target.value;
+                    setSelectedSentidoOrder(newValue);
+                    handleOrderChange(selectedTipoOrder, newValue);
+                  }}/>
+                Descendente
+              </label>
+            </>
+          </div>  
+        </div>
+
+      <button className={style.applyFilter} onClick={handleFilterapply}>Aplicar Filtros</button>
+      </div>
+          
       <div className={style.box1} onClick={() => menuVisible && setMenuVisible(false)}>
       
 
-        <div className={style.pag}>
+        <div className={style.pagBox}>
           <div className={style.menuButton} onClick={toggleMenu}>
             {/* Botón para mostrar/ocultar el menú */}
-            <button>Mostrar Filtros</button>
+            <button>Filters</button>
           </div>
-
-          <button  onClick={() => handlePageChange(1)} disabled={currentPage === 1}>
-            {"<<"}
-          </button>
-          <button className={style.pageButtonTen} onClick={() => handlePageChange(currentPage - 10)} disabled={currentPage - 10 < 1}>
-            {currentPage - 10}
-          </button>
-          <button className={style.pageButtonFive} onClick={() => handlePageChange(currentPage - 5)} disabled={currentPage - 5 < 1}>
-            {currentPage - 5}
-          </button>
-          <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
-            {currentPage - 1}
-          </button>
-          <button onClick={() => handlePageChange(currentPage)}>
-            {currentPage}
-          </button>
-          <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage - 1 === totalPages}>
-            {currentPage + 1}
-          </button>
-          <button className={style.pageButtonFive} onClick={() => handlePageChange(currentPage + 5)} disabled={currentPage + 5 > totalPages}>
-            {currentPage + 5}
-          </button>
-          <button className={style.pageButtonTen} onClick={() => handlePageChange(currentPage + 10)} disabled={currentPage + 10 > totalPages}>
-            {currentPage + 10}
-          </button>
-          <button onClick={() => handlePageChange(totalPages)} disabled={currentPage === totalPages}>
-            {">>"}
-          </button>
+          <div className={style.pag}>
+            <button  onClick={() => handlePageChange(1)} disabled={currentPage === 1}>
+              {"<<"}
+            </button>
+            <button className={style.pageButtonTen} onClick={() => handlePageChange(currentPage - 10)} disabled={currentPage - 10 < 1}>
+              {currentPage - 10}
+            </button>
+            <button className={style.pageButtonFive} onClick={() => handlePageChange(currentPage - 5)} disabled={currentPage - 5 < 1}>
+              {currentPage - 5}
+            </button>
+            <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+              {currentPage - 1}
+            </button>
+            <button onClick={() => handlePageChange(currentPage)}>
+              {currentPage}
+            </button>
+            <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage - 1 == totalPages -1}>
+              {currentPage + 1}
+            </button>
+            <button className={style.pageButtonFive} onClick={() => handlePageChange(currentPage + 5)} disabled={currentPage + 5 > totalPages}>
+              {currentPage + 5}
+            </button>
+            <button className={style.pageButtonTen} onClick={() => handlePageChange(currentPage + 10)} disabled={currentPage + 10 > totalPages}>
+              {currentPage + 10}
+            </button>
+            <button onClick={() => handlePageChange(totalPages)} disabled={currentPage === totalPages}>
+              {">>"}
+            </button>
+          </div>
         </div>
 
         <div className={style.card_box}>

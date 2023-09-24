@@ -2,21 +2,45 @@
     place-items: center;
     width: 300px;
     height: 400px;
-    background-color: gray;
+    background: url(../../assets/Q21yJzY-carbon-fibre-wallpaper.jpg);
     border-radius: 15%;
-    border-color: red;
+    border-color: rgba(206, 51, 51, 0.802);
     border-width: 5px;
     border-style: solid;
+}
+.infoBox{
+    width: 300px;
+    display: grid;
+    grid-template-rows: 30px 30px 105px;
+    grid-template-columns: repeat(1, auto);
 }
 
 .ima{
     margin-top: 10%;
     width: 200px;
     height: 200px;
-    border-radius: 5%;
+    border-radius: 10%;
     overflow: hidden;
 }
 
-p{
-    color: black;
+.name{
+    margin: 0;
+    color: white;
+    font-size: 20px;
+}
+.teams{
+    margin: 0;
+    color: white;
+    font-size: 20px;
+}
+.teamsList {
+    margin: 0;
+    width: 300px;
+    align-items: center;
+    justify-content: center;
+    height: 105px;
+    color: white;
+    font-size: 20px;
+    overflow: hidden;
+    white-space: break-spaces;
 }

@@ -10,15 +10,11 @@ export async function newDriver(formData) {
         return response.data;
 
     } catch (localError) {
-        //console.error('Error en solicitud local:', localError);
-
-        // Si falla la solicitud local, intenta la solicitud a la dirección IP
         try {
-            const ipResponse = await axios.post(`${localEndpoint}driver`, formData);
+            const ipResponse = await axios.post(`${ipEndpoint}driver`, formData);
             return ipResponse.data;
         } catch (ipError) {
             console.error('Error en solicitud por IP:', ipError);
-            // Puedes manejar el error de la manera que desees aquí.
         }
     }
 }
@@ -31,15 +27,12 @@ export const getDetails = async (id) => {
       return response.data;
 
     } catch (localError) {
-        // Si falla la solicitud local, intenta la solicitud a la dirección IP
-
         try {
             const ipResponse = await axios.post(`${ipEndpoint}drivers/${id}`);
             return ipResponse.data;
 
         } catch (ipError) {
             console.error('Error en solicitud por IP:', ipError);
-            // Puedes manejar el error de la manera que desees aquí.
         }
     }
   };

@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { services } from '../../apiHelpers/index';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import style from "./Detail.module.css";
+import {getTeams ,getDrivers} from "../../Redux/actions";
+import {useDispatch } from 'react-redux';
 
 function DetailPage() {
     const { id } = useParams();
     const [driver, setDriver] = useState({});
 
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getTeams());
+        dispatch(getDrivers());
+      }, [ ]);
+
     useEffect(() => {
         services.getDetails(id)
         .then((data) => {
-          console.log(data);
-          if (data.name) {
-  
-            setDriver(data);
-
-          } else {
-            window.alert('No hay personajes con ese ID');
-          }
+          setDriver(data);
         })
         .catch((error) => {
           console.error('Error fetching driver data:', error);
@@ -28,43 +29,28 @@ function DetailPage() {
         setDriver({});
       };
     }, [id]);
-
-    const regex = /https:\/\/commons\.wikimedia\.org\/w\/index\.php\?curid=\d+/;
     return (
-      <div>
-        <Link to="/home">
-            <button>Ir a Inicio</button>
-        </Link>
-        {(
-          <div >
-            <div >
-{/*
-              <h2 >{driver.name || driver.name.forename}</h2>    */}      
-            
-              
-              <div >
-                <ul >
-                  
-                  <li>Nombre: {typeof driver.name === 'object' ? driver.name.forename : driver.name || 'N/A'}</li>
-                  
-                  <li>Apellido: {driver.lastname || (driver.name && driver.name.surname) || "No contenido en data.js"}</li>
-
-                  <li >nationality: {driver.nationality || "No contenido en data.js"}</li>
-
-                  <li >description: {driver.description || "No contenido en data.js"}</li>
-
-                  <li >birthdate: {driver.birthdate|| driver.dob|| "No contenido en data.js"}</li>
-
-                  <li >teams: {driver.teams || "No contenido en data.js"}</li>
-
-                  <img src={typeof driver.image === 'object' ? driver.image.url : driver.image}/>
-
-                </ul>
-              </div>
-              
-            </div>  
-          </div>    
-        )}
+      <div className={style.containerBox}> 
+        <div className={style.titleBox}>
+          <h3>{typeof driver.name === 'object' ? driver.name.forename : driver.name || 'N/A'} {driver.lastname || (driver.name && driver.name.surname) || "No contenido en data.js"} "{driver.code || ""}"</h3>
+        </div>
+        <div className={style.dataBox}>
+            <p className={style.nationBox}>Nationality: {driver.nationality}</p>
+            <p className={style.birthdateBox}>Birthdate: {driver.birthdate|| driver.dob}</p>
+            <p className={style.teamBox}>Teams: {driver.teams}</p>
+            <p className={style.descriptionBox}>{driver.description || "Description not available"}</p>
+        </div>
+        <div className={style.imgBox}>
+          <img className={style.imgRender} src={typeof driver.image === 'object' ? driver.image.url : driver.image}/>
+        </div>
+        <div className={style.footerBox} >
+          <div className={style.wikiBox}>
+           <a  href={driver.url || ""}>Wiki</a> 
+          </div>
+          <div className={style.idBox}>
+            <p>Id: {driver.id}</p>
+          </div>       
+        </div>
       </div>
     );
   }

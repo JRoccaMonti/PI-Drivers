@@ -1,28 +1,24 @@
-import React, { useEffect } from 'react';
-import { getTeams, getDrivers } from '../../Redux/actions';
-import { useDispatch } from 'react-redux';
+import React, { useEffect} from 'react';
 import { NavLink } from 'react-router-dom';
+import style from "./NavBar.module.css";
+import {useDispatch } from 'react-redux';
+import {getTeams ,getDrivers} from "../../Redux/actions";
 
 function Nav() {
-
     const dispatch = useDispatch();
-
     useEffect(() => {
         dispatch(getTeams());
-        dispatch(getDrivers());     
-    }, []);
-
+        dispatch(getDrivers());
+    }, [ ]);
+    const imageUrl = `http://192.168.1.83:3001/images/logo 2.png`;
     return (
-        <div>
+        <div className={style.generalContainer}>
             <div>
                 <NavLink to='/home'>
-                    <button>home</button>
-                </NavLink>
-                <NavLink to='/'>
-                    <button>landing</button>
+                    <img className={style.imgF1} src={imageUrl}/>
                 </NavLink>
                 <NavLink to='/register'>
-                    <button>registro</button>
+                    <button className={style.regButton}>Register a new legend</button>
                 </NavLink>
             </div>
         </div>

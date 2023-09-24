@@ -1,10 +1,3 @@
-/* GET | /drivers/:idDriver
-Esta ruta obtiene el detalle de un driver específico. Es decir que devuelve un objeto con la información pedida en el detalle de un driver.
-El driver es recibido por parámetro (ID).
-Tiene que incluir los datos del/los team/s del driver al que está asociado.
-Debe funcionar tanto para los drivers de la API como para los de la base de datos.
-*/
-
 const axios = require('axios');
 const { Driver, Teams, DriverTeam } = require('../db');
 
@@ -69,7 +62,7 @@ const detailById = async (req, res) => {
     
     if (drivers) {
       // Si se encontró un conductor localmente, aplica la función driversWithTeams y devuelve el resultado como JSON.
-      return res.status(200).json({resul});
+      return res.status(200).json(resul);
     } else {
       // Si no se encontró el conductor, devuelve un mensaje de error.
       return res.status(404).json({ message: 'Driver not found' });

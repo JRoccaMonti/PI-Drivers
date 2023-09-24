@@ -1,5 +1,4 @@
 import { GET_TEAMS,GET_DRIVERS,GET_DRIVERS_NAME,ORDER,FILTER} from './actionTypes';
-import axios from "axios";
 
 const initialState = {
   teams: [],
@@ -52,8 +51,8 @@ const reducer = (state = initialState, action) => {
             // Filtrar por idFilter
             const idMatch =
               (!idFilter || idFilter === 'All' || // Si idFilter es 'All', incluir todos los elementos
-                (idFilter === 'API' && driver.id >= 1 && driver.id <= 509) || // Si idFilter es 'API', incluir de 1 a 509
-                (idFilter === 'DB' && driver.id >= 510)); // Si idFilter es 'DB', incluir desde 510 en adelante
+                (idFilter === 'API' && driver.id >= 1 && driver.id <= 508) || // Si idFilter es 'API', incluir de 1 a 509
+                (idFilter === 'DB' && driver.id >= 509)); // Si idFilter es 'DB', incluir desde 510 en adelante
         
             return teamsMatch && nationalityMatch && idMatch;
           });
@@ -64,7 +63,7 @@ const reducer = (state = initialState, action) => {
           };
         
       case ORDER:
-        const orderDrivers = [...state.filteredDrivers];
+        const orderDrivers = [...state.filteredDrivers.length > 0 ? state.filteredDrivers : state.drivers];
         const tipo = action.payload.tipoOrder;
         const sentido = action.payload.sentidoOrder;
 
@@ -115,7 +114,8 @@ const reducer = (state = initialState, action) => {
           ...state,
           filteredDrivers: orderDrivers,
         };   
-      default: return {...state};
+      
+        default: return {...state};
     }
   };
 

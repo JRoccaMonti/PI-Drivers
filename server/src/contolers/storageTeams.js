@@ -52,6 +52,18 @@ const storageTeams = async (req, res) => {
         const teamsList = (await Teams.findAll()).map(team => ({ value: team.id, text: team.name }));
         const nationalitysList = (await Nationality.findAll()).map(nationality => ({ value: nationality.id, text: nationality.name }));
 
+        nationalitysList.sort((a, b) => {
+            const nameA = a.text.toUpperCase();
+            const nameB = b.text.toUpperCase();
+            if (nameA < nameB) {
+              return -1;
+            }
+            if (nameA > nameB) {
+              return 1;
+            }
+            return 0;
+          });
+
 
         res.status(200).json({teamsList,nationalitysList}); // envia las listas
 

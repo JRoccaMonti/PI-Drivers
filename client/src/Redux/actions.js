@@ -99,7 +99,7 @@ export const orderCards = (tipoOrder, sentidoOrder) => {
       type: ORDER,
       payload: { sentidoOrder,tipoOrder,  },
     };
-  };
+};
   
 
 
