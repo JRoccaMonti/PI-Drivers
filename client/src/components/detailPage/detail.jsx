@@ -29,19 +29,29 @@ function DetailPage() {
         setDriver({});
       };
     }, [id]);
+    console.log(driver);
     return (
       <div className={style.containerBox}> 
         <div className={style.titleBox}>
           <h3>{typeof driver.name === 'object' ? driver.name.forename : driver.name || 'N/A'} {driver.lastname || (driver.name && driver.name.surname) || "No contenido en data.js"} "{driver.code || ""}"</h3>
         </div>
         <div className={style.dataBox}>
-            <p className={style.nationBox}>Nationality: {driver.nationality}</p>
-            <p className={style.birthdateBox}>Birthdate: {driver.birthdate|| driver.dob}</p>
-            <p className={style.teamBox}>Teams: {driver.teams}</p>
+            <div className={style.nationBox}>
+              <p>Nationality: </p>
+              <p>{driver.nationality}</p>
+            </div>
+            <div className={style.birthdateBox}>
+              <p>Birthdate: </p>
+              <p>{driver.birthdate|| driver.dob}</p>
+            </div>
+            <div className={style.teamBox}>
+              <p>Teams: </p>
+              <p>{driver.teams}</p>
+            </div>
             <p className={style.descriptionBox}>{driver.description || "Description not available"}</p>
         </div>
         <div className={style.imgBox}>
-          <img className={style.imgRender} src={typeof driver.image === 'object' ? driver.image.url : driver.image}/>
+          <img className={style.imgRender} src={typeof driver.image === 'object' ? driver.image.url : driver.image || "http://192.168.1.83:3001/images/driversDB/logo.png"}/>
         </div>
         <div className={style.footerBox} >
           <div className={style.wikiBox}>

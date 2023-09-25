@@ -9,7 +9,7 @@ function Card({driver}) {
     return (
         <div className={style.container}>
             <div>
-                <img className={style.ima} src={typeof driver.image === 'object' ? driver.image.url : driver.image}/>
+                <img className={style.ima} src={typeof driver.image === 'object' ? driver.image.url : driver.image }/>
                 <div className={style.infoBox}>
                     <NavLink to={`/detail/${driver.id}`} >
                         <h4 className={style.name}>{typeof driver.name === 'object' ? driver.name.forename : driver.name || 'N/A'} {driver.lastname || (driver.name && driver.name.surname) || "No contenido en data.js"}</h4>

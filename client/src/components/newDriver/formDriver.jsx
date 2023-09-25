@@ -39,7 +39,10 @@ function DriverRegistration() {
         }
         }
         return errors;
-    };    
+    }; 
+
+    const hasErrors = Object.values(formErrors).some(value => value !== '');
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         const errors = validateForm();
@@ -94,19 +97,19 @@ function DriverRegistration() {
             <form className={style.formBox} onSubmit={handleSubmit}  encType="multipart/form-data">
             <>
                 <div className={style.dataBox}>
-                    <label className={style.labelBox}>
+                    <label className={style.datalabelBox}>
                         Name: <input className={style.inputBox} type="text" name="name" value={formData.name} onChange={handleChange} />
                         {formErrors.name && (<div>{formErrors.name}</div>)}
                     </label>
-                    <label className={style.labelBox}>
+                    <label className={style.datalabelBox}>
                         Apellido: <input className={style.inputBox} type="text" name="lastname" value={formData.lastname} onChange={handleChange} />
                         {formErrors.lastname && (<div>{formErrors.lastname}</div>)}
                     </label>
-                    <label className={style.labelBox}>
+                    <label className={style.datalabelBox}>
                         Descripción: <input className={style.inputBox} type="text" name="description" value={formData.description} onChange={handleChange} />
                         {formErrors.description && (<div>{formErrors.description}</div>)}
                     </label>
-                    <label className={style.labelBox}>
+                    <label className={style.datalabelBox}>
                         Nacionalidad: 
                         <select className={style.selectBox} name="nationality" value={formData.nationality} onChange={handleChange}>
                             <option value="Not select">Not select</option>
@@ -118,12 +121,12 @@ function DriverRegistration() {
                         </select>
                         {formErrors.nationality && (<div>{formErrors.nationality}</div>)}
                     </label>
-                    <label className={style.labelBox}>
+                    <label className={style.datalabelBox}>
                         Fecha de Nacimiento: <input className={style.inputBox} type="date" name="birthdate" value={formData.birthdate} onChange={handleChange} />
                         {formErrors.birthdate && (<div>{formErrors.birthdate}</div>)}
                     </label>
-                    <label className={style.labelBox}>
-                        Imagen: <input className={style.inputBox} type="file" accept="image/*" onChange={handleImageChange} />
+                    <label className={style.datalabelBox}>
+                        Imagen: <input  type="file" accept="image/*" onChange={handleImageChange} />
                         {formErrors.image && (<div>{formErrors.image}</div>)}
                     </label>
                 </div>
@@ -144,7 +147,7 @@ function DriverRegistration() {
                         </select>
                         {formErrors.teamId && (<div>{formErrors.teamId}</div>)}
                     </label>
-                    <button className={style.buttonSubmit} type="submit">Registrar Conductor</button>
+                    <button className={style.buttonSubmit} type="submit" disabled={hasErrors}>Registrar Conductor</button>
                 </div>                
             </>
             </form>

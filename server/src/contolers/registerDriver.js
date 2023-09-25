@@ -20,6 +20,7 @@ const saveImage = async (base64Image, filename) => {
   
         // Define la ruta donde se guardará la imagen
         const imagesDirectory = path.join(__dirname, '../public/images/driversDB');
+        
         //const imagePath = `C:\\Users\\Jano\\Desktop\\Henrry\\cr-pi-drivers-main\\server\\src\\public\\images\\driversDB\\${filename}`;
         const imagePath = path.join(imagesDirectory, filename);
         const url = `http://192.168.1.83:3001/images/driversDB/${filename}`;

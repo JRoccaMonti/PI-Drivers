@@ -3,29 +3,28 @@ const { Driver, Teams, DriverTeam } = require('../db');
 
 const detailById = async (req, res) => {
   try {
-    const idSearch = req.params.idDriver; // Obtiene el ID del conductor a buscar desde los parámetros de la solicitud.
+    const idSearch = req.params.idDriver;
 
     try {
-      // Intenta realizar una solicitud a una URL externa (un servicio externo de conductores).
       const response = await axios.get(`http://localhost:5000/drivers/${idSearch}`);
 
+      if (response.data.image.url == '') {
+          response.data.image.url = 'http://192.168.1.83:3001/images/driversDB/logo.png';
+      }
+
       if (response.status === 200) {
-        // Si la solicitud externa tiene éxito (estado 200), devuelve la respuesta como JSON.
         return res.status(200).json(response.data);
       }
     } catch (error) {
-      // Si la solicitud externa falla, continúa con la obtención de datos locales.
     }
 
-    // Obtiene datos del conductor de la base de datos local.
     const drivers = await Driver.findByPk(idSearch, {
       attributes: ['id', 'name', 'lastname', 'description', 'image', 'nationality', 'birthdate'],
     });
 
-    // Obtiene datos de todos los equipos desde la base de datos local.
     const teams = await Teams.findAll({ attributes: ['id', 'name'],});
     
-    // Obtiene datos de todas las relaciones entre conductores y equipos desde la base de datos local.
+    // relacion
     const driverTeams = await DriverTeam.findAll({ attributes: ['DriverId', 'TeamId'],});
     
     // Crea un mapa para relacionar las asociaciones entre conductores y equipos.
@@ -68,7 +67,6 @@ const detailById = async (req, res) => {
       return res.status(404).json({ message: 'Driver not found' });
     }
   } catch (error) {
-    // Manejo de errores en caso de problemas con la solicitud o la base de datos.
     return res.status(500).json({ message: error.message });
   }
 };

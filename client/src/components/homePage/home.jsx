@@ -115,7 +115,7 @@ function HomePage() {
         <div className={style.filteTipe}>
 
             <label htmlFor="nameSearch">Name:</label>
-            <input type='text' id="nameSearch" value={nameSearch}  onChange={(event) => handleChange(event, 'nameSearch')}/>
+            <input className={style.nameInput} type='text' id="nameSearch" value={nameSearch}  onChange={(event) => handleChange(event, 'nameSearch')}/>
           
             <label htmlFor="teamsSelector">Equipo:</label>
             <select id="teamsSelector" value={selectedTeams} onChange={(event) => handleChange(event, 'teamsSelector')}>
@@ -148,8 +148,6 @@ function HomePage() {
             </select>
 
         </div>
-
-       
 
         <div className={style.filterOrder}>
           <div className={style.Order}>
@@ -208,31 +206,31 @@ function HomePage() {
             <button>Filters</button>
           </div>
           <div className={style.pag}>
-            <button  onClick={() => handlePageChange(1)} disabled={currentPage === 1}>
+            <button className={style.pageButtonFirst} onClick={() => handlePageChange(1)} disabled={currentPage === 1}>
               {"<<"}
             </button>
-            <button className={style.pageButtonTen} onClick={() => handlePageChange(currentPage - 10)} disabled={currentPage - 10 < 1}>
+            <button className={style.pageButtonTenMinus} onClick={() => handlePageChange(currentPage - 10)} disabled={currentPage - 10 < 1}>
               {currentPage - 10}
             </button>
-            <button className={style.pageButtonFive} onClick={() => handlePageChange(currentPage - 5)} disabled={currentPage - 5 < 1}>
+            <button className={style.pageButtonFiveMinus} onClick={() => handlePageChange(currentPage - 5)} disabled={currentPage - 5 < 1}>
               {currentPage - 5}
             </button>
-            <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+            <button className={style.pageButtonOneMinus} onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
               {currentPage - 1}
             </button>
-            <button onClick={() => handlePageChange(currentPage)}>
+            <button className={style.pageButtonCurrent} onClick={() => handlePageChange(currentPage)}>
               {currentPage}
             </button>
-            <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage - 1 == totalPages -1}>
+            <button className={style.pageButtonOnePlus} onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage - 1 == totalPages -1}>
               {currentPage + 1}
             </button>
-            <button className={style.pageButtonFive} onClick={() => handlePageChange(currentPage + 5)} disabled={currentPage + 5 > totalPages}>
+            <button className={style.pageButtonFivePlus} onClick={() => handlePageChange(currentPage + 5)} disabled={currentPage + 5 > totalPages}>
               {currentPage + 5}
             </button>
-            <button className={style.pageButtonTen} onClick={() => handlePageChange(currentPage + 10)} disabled={currentPage + 10 > totalPages}>
+            <button className={style.pageButtonTenPlus} onClick={() => handlePageChange(currentPage + 10)} disabled={currentPage + 10 > totalPages}>
               {currentPage + 10}
             </button>
-            <button onClick={() => handlePageChange(totalPages)} disabled={currentPage === totalPages}>
+            <button className={style.pageButtonLast} onClick={() => handlePageChange(totalPages)} disabled={currentPage === totalPages}>
               {">>"}
             </button>
           </div>

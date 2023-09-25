@@ -1,10 +1,3 @@
-/*
-GET | /drivers/name?="..."
-Esta ruta debe obtener los primeros 15 drivers que se encuentren con la palabra recibida por query.
-Debe poder buscarlo independientemente de mayúsculas o minúsculas.
-Si no existe el driver, debe mostrar un mensaje adecuado.
-Debe buscar tanto los de la API como los de la base de datos.
-*/
 const axios = require('axios');
 const { Op } = require('sequelize');
 const { Driver, Teams, DriverTeam } = require('../db');
@@ -53,7 +46,6 @@ const firstFifteen = async (req, res) => {
             const associatedTeamIds = driverTeamMap.get(driverId) || [];
         
             // Buscar los equipos asociados usando los IDs
-
             const associatedTeams = teams
                 .filter((team) => associatedTeamIds.includes(team.id))
                 .map((team) => team.name);

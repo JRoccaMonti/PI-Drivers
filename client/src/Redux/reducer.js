@@ -51,8 +51,8 @@ const reducer = (state = initialState, action) => {
             // Filtrar por idFilter
             const idMatch =
               (!idFilter || idFilter === 'All' || // Si idFilter es 'All', incluir todos los elementos
-                (idFilter === 'API' && driver.id >= 1 && driver.id <= 508) || // Si idFilter es 'API', incluir de 1 a 509
-                (idFilter === 'DB' && driver.id >= 509)); // Si idFilter es 'DB', incluir desde 510 en adelante
+                (idFilter === 'API' && driver.id >= 1 && driver.id <= 508) || // Si idFilter es 'API', incluir de 1 a 508
+                (idFilter === 'DB' && driver.id >= 509)); // Si idFilter es 'DB', incluir desde 509 en adelante
         
             return teamsMatch && nationalityMatch && idMatch;
           });

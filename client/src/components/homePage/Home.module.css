@@ -1,6 +1,4 @@
-button:disabled {
-    display: none;
-}
+
 .containerBox{
     margin-top: 15px;
     width: 100%;
@@ -64,20 +62,83 @@ button:disabled {
     grid-template-columns: repeat(1, 1fr);
     gap: 8px;
 }
-
+.nameInput{
+    font-family: inherit;
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #9b9b9b;
+    outline: 0;
+    color: #fff;
+    padding-bottom: 6px;
+    background: transparent;
+    transition: border-color 0.2s;
+    border-width: 3px;
+}
+.nameInput::placeholder{
+    color: transparent;
+}
+.nameInput:focus{
+    border-image: linear-gradient(to right, #991111, #ef3838);
+    border-image-slice: 1;
+}
 
 
 
 /* targetas*/
-
+.pagBox button:disabled {
+    display: none;
+}
 .pagBox{
     grid-area: header;
+    height: 50px;
 }
 .pag{
-    width: calc(100% - 100px);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    display: grid;
+    grid:
+    "pageButtonFirst pageButtonTenMinus pageButtonFiveMinus pageButtonOneMinus pageButtonCurrent pageButtonOnePlus pageButtonFivePlus pageButtonTenPlus pageButtonLast" 1fr
+    / 11% 11% 11% 11% 11% 11% 11% 11% 11%;
+}
+.pageButtonFirst{
+    grid-area: pageButtonFirst;
+}
+.pageButtonTenMinus{
+    grid-area: pageButtonTenMinus;
+}
+.pageButtonFiveMinus{
+    grid-area: pageButtonFiveMinus;
+}
+.pageButtonOneMinus{
+    grid-area: pageButtonOneMinus;
+}
+.pageButtonCurrent{
+    border: solid 5px red;
+    grid-area: pageButtonCurrent;
+}
+.pageButtonOnePlus{
+    grid-area: pageButtonOnePlus;
+}
+.pageButtonFivePlus{
+    grid-area: pageButtonFivePlus;
+}
+.pageButtonTenPlus{
+    grid-area: pageButtonTenPlus;
+}
+.pageButtonLast{
+    grid-area: pageButtonLast;
+}
+.pag button{
+    transform: scale(0.9);
+    padding: 0;
+    margin: 0;
 }
 
+
 .card_box{
+    justify-content: center;
     margin-top: 15px;
     grid-area: main;
     place-items: center;
@@ -92,7 +153,6 @@ button:disabled {
 
 @media (max-width:1100px) {
     .card_box{
-        grid-area: main;
         grid-template-rows: repeat(3, 360px);
         grid-template-columns: repeat(3, auto);
     }
@@ -105,7 +165,6 @@ button:disabled {
 }
 @media (max-width:800px) {
     .card_box{
-        grid-area: main;
         grid-template-rows: repeat(3, 360px);
         grid-template-columns: repeat(3, 240px);
     }
@@ -120,8 +179,12 @@ button:disabled {
     }
 }
 @media (max-width:700px) {
+    .pag{
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%) scale(0.5);
+    }
     .card_box{
-        grid-area: main;
         grid-template-rows: repeat(5, 260px);
         grid-template-columns: repeat(2, 200px);
     }
@@ -139,8 +202,12 @@ button:disabled {
     }
 }
 @media (max-width:400px) {
+    .pag{
+        position: absolute;
+        left: 40%;
+        transform: translateX(-50%) scale(0.6);
+    }
     .card_box{
-        grid-area: main;
         grid-template-rows: repeat(5, 260px);
         grid-template-columns: repeat(2, 190px);
     }
