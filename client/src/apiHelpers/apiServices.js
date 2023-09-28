@@ -14,7 +14,7 @@ export async function newDriver(formData) {
             const ipResponse = await axios.post(`${ipEndpoint}driver`, formData);
             return ipResponse.data;
         } catch (ipError) {
-            console.error('Error en solicitud por IP:', ipError);
+            throw ipError;
         }
     }
 }
@@ -32,7 +32,7 @@ export const getDetails = async (id) => {
             return ipResponse.data;
 
         } catch (ipError) {
-            console.error('Error en solicitud por IP:', ipError);
+            throw ipError;
         }
     }
   };

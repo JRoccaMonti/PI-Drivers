@@ -9,22 +9,22 @@ function validateField(name, value) {
     switch (name) {
         case 'name':
             if (!textRegex.test(value)) {
-            errorMessage = 'El nombre solo debe contener letras.';
+            errorMessage = 'The name must only contain letters.';
             }
         break;
         case 'lastname':
             if (!textRegex.test(value)) {
-            errorMessage = 'El apellido solo debe contener letras.';
+            errorMessage = 'The last name must only contain letters.';
             }
         break;
         case 'nationality':
             if (value === '' || value === 'Not select') {
-            errorMessage = 'Debes seleccionar una nacionalidad válida.';
+            errorMessage = 'You must select a valid nationality.';
             }
         break;
         case 'birthdate':
             if (!dateRegex.test(value)) {
-               errorMessage = 'Debes seleccionar una fecha válida.'; 
+               errorMessage = 'You must select a valid date.'; 
             }            
             const birthdate = new Date(value);
             const currentDate = new Date();
@@ -32,20 +32,20 @@ function validateField(name, value) {
             const ageInYears = Math.floor(ageDifferenceInMilliseconds / (365.25 * 24 * 60 * 60 * 1000));
 
             if (ageInYears < 18) {
-                errorMessage = 'Debes ser mayor de 18 años para registrarte.';
+                errorMessage = 'You must be over 18 years old to register.';
             }
         break;
         case 'description':
             if (value.length === 0 ) {
-                errorMessage = 'La descripcion no puede estar vacia';
+                errorMessage = 'Description cannot be empty';
             };
             if (value.length > 255 ) {
-                errorMessage = 'La descripcion no puede superar los 255 caracteres';
+                errorMessage = 'The description cannot exceed 255 characters';
             };
         break;
         case 'teamId':
             if (value.length === 0) {
-                errorMessage = 'Debes seleccionar al menos un equipo.';
+                errorMessage = 'You must select at least one team.';
             }
         break;
         

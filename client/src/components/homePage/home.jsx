@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Card } from "../index";
-import { applyFilter, getDriversName ,getTeams ,getDrivers ,orderCards } from "../../Redux/actions";
+import { applyFilter, getDriversName,orderCards } from "../../Redux/actions";
 import style from "./Home.module.css";
 
 function HomePage() {
@@ -60,6 +60,7 @@ function HomePage() {
   const handleFilterChange = () => {
     dispatch(applyFilter(selectedTeams, selectedNationality, selectedIdFilter));
   };
+  
 
   const handleChange = (event) => {
     const newValue = event.target.value;
@@ -72,31 +73,41 @@ function HomePage() {
       case 'nationalitySelector':
         setSelectedNationality(newValue);
         break;
-      case 'nameSearch':
-        if (newValue.trim() === '') {
-          dispatch(getDrivers());
-          setNameSearch(newValue);
-        } else {
-          dispatch(getDriversName(newValue));
-          setNameSearch(newValue);
-        }
+      case 'nameSearch':      
+        setNameSearch(newValue);
         break;
       case 'idFilterSelector':
         setSelectedIdFilter(newValue);
-        break;
-        
+        break;        
       
       default:
         break;
     } 
-  };  
-  
-  
+  };
+
   const handleFilterapply = () => {
     handleFilterChange();
     handleOrderChange();
     handlePageChange(1);
   };
+  const [loading, setLoading] = useState(false);
+
+  const test = async () => {
+    setLoading(true); // Establece loading en true al comenzar la operación
+    dispatch(getDriversName(nameSearch));
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 500)); // Simula una operación demorada
+      handleFilterChange();
+      handleOrderChange();
+      handlePageChange(1);
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setLoading(false); // Establece loading en false al finalizar la operación
+    }
+  };
+
 
   useEffect(() => {
     handleFilterapply();
@@ -117,9 +128,9 @@ function HomePage() {
             <label htmlFor="nameSearch">Name:</label>
             <input className={style.nameInput} type='text' id="nameSearch" value={nameSearch}  onChange={(event) => handleChange(event, 'nameSearch')}/>
           
-            <label htmlFor="teamsSelector">Equipo:</label>
+            <label htmlFor="teamsSelector">Team:</label>
             <select id="teamsSelector" value={selectedTeams} onChange={(event) => handleChange(event, 'teamsSelector')}>
-              <option value="All">Todos</option>
+              <option value="All">All</option>
               {teamOptions.map((option) => (
                 <option key={option.value} value={option.text}>
                     {option.text}
@@ -128,9 +139,9 @@ function HomePage() {
               <option value="Not Found">Not Found</option>
             </select>
 
-            <label htmlFor="nationalitySelector">Nacionalidad:</label>
+            <label htmlFor="nationalitySelector">Nationality:</label>
             <select id="nationalitySelector" value={selectedNationality} onChange={(event) => handleChange(event, 'nationalitySelector')}>
-              <option value="All">Todos</option>
+              <option value="All">All</option>
               {nationalityOptions.map((option) => (
                 <option key={option.value} value={option.text}>
                     {option.text}
@@ -142,7 +153,7 @@ function HomePage() {
             <label htmlFor="idFilterSelector">ID:</label>
 
             <select id="idFilterSelector" value={selectedIdFilter} onChange={(event) => handleChange(event, 'idFilterSelector')}>
-              <option value="All">Todos</option>
+              <option value="All">All</option>
               <option value="API">API</option>
               <option value="DB">DB</option>
             </select>
@@ -159,7 +170,7 @@ function HomePage() {
                     setSelectedTipoOrder(newValue);
                     handleOrderChange(newValue, selectedSentidoOrder);
                   }}/>
-                Alfabético
+                Alphabetical
               </label>
               <label>
                 <input type="radio" name="tipoOrden" value="nacimiento" checked={selectedTipoOrder === "nacimiento"} onChange={(event) => {
@@ -167,7 +178,7 @@ function HomePage() {
                     setSelectedTipoOrder(newValue);
                     handleOrderChange(newValue, selectedSentidoOrder);
                   }}/>
-                Nacimiento
+                Birthdate
               </label>     
             </> 
           </div>
@@ -180,7 +191,7 @@ function HomePage() {
                     setSelectedSentidoOrder(newValue);
                     handleOrderChange(selectedTipoOrder, newValue);
                   }}/>
-                Ascendente
+                Ascending
               </label>
               <label>
                 <input type="radio" name="sentidoOrden" value="D" checked={selectedSentidoOrder === "D"} onChange={(event) => {
@@ -188,13 +199,13 @@ function HomePage() {
                     setSelectedSentidoOrder(newValue);
                     handleOrderChange(selectedTipoOrder, newValue);
                   }}/>
-                Descendente
+                Descending
               </label>
             </>
           </div>  
         </div>
 
-      <button className={style.applyFilter} onClick={handleFilterapply}>Aplicar Filtros</button>
+      <button className={style.applyFilter} onClick={test}>Filters</button>
       </div>
           
       <div className={style.box1} onClick={() => menuVisible && setMenuVisible(false)}>
@@ -237,12 +248,23 @@ function HomePage() {
         </div>
 
         <div className={style.card_box}>
-          {driversToShow.map((driver) => (
-            <div className={style.card_littlebox} key={driver.id}>
-              <Card driver={driver}/>
-            </div>
-          ))}
+          {loading ? (
+              // Muestra el símbolo de carga mientras loading es true
+              <p className={style.card_box_text}>Loading...</p>
+            ) : filteredDrivers.length === 0 ? (
+              // Muestra un mensaje de "No se encontraron resultados" cuando el filtro devuelve un array vacío
+              <p className={style.card_box_text}>Driver not found.</p>
+            ) : (
+              // Renderiza las tarjetas de conductor cuando loading es false y hay resultados en filteredDrivers
+              driversToShow.map((driver) => (
+                <div className={style.card_littlebox} key={driver.id}>
+                  <Card driver={driver} />
+                </div>
+              ))
+            )
+          }
         </div>
+
 
       </div>
 

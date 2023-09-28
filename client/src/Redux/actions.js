@@ -62,6 +62,9 @@ export const getDrivers = () => {
 };
 
 export const getDriversName = (name) => {
+    if (name === "") {
+        return getDrivers();
+    }
     return (dispatch) => {
         const localEndpoint = ('http://localhost:3001/drivers/name?name=' + name);
         const ipEndpoint = 'http://192.168.1.83:3001/drivers/name?name=' + name;

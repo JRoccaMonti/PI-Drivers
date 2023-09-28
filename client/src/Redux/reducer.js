@@ -14,8 +14,7 @@ const reducer = (state = initialState, action) => {
       case GET_DRIVERS:
         return {
           ...state,
-          drivers: action.payload,
-          filteredDrivers: action.payload
+          drivers: action.payload
         };
 
       case GET_DRIVERS_NAME:
@@ -56,14 +55,16 @@ const reducer = (state = initialState, action) => {
         
             return teamsMatch && nationalityMatch && idMatch;
           });
-          
+          if (filtered.length === 0) {
+            console.log(filtered);
+          }
           return {
             ...state,
             filteredDrivers: filtered // La estructura de filtered coincide con la estructura original de state.drivers
           };
         
       case ORDER:
-        const orderDrivers = [...state.filteredDrivers.length > 0 ? state.filteredDrivers : state.drivers];
+        const orderDrivers = [...state.filteredDrivers];
         const tipo = action.payload.tipoOrder;
         const sentido = action.payload.sentidoOrder;
 

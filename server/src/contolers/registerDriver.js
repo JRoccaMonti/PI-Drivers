@@ -4,12 +4,14 @@ Esta ruta recibirá todos los datos necesarios para crear un driver y relacionar
 Toda la información debe ser recibida por body.
 Debe crear un driver en la base de datos, y este debe estar relacionado con sus teams indicados (al menos uno).
 */
+const axios = require('axios');
 const path = require('path');
+const { Op } = require('sequelize');
 const fs = require('fs');
 const { Driver, Teams } = require('../db');
 const configureDatabaseIdStartValue = require('../Helpers/stratIdDiriver').configureDatabaseIdStartValue;
 
-const textRegex = /^[A-Za-z\s]+$/;
+const textRegex = /^[A-Za-z\s-]+$/;
 const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
 const saveImage = async (base64Image, filename) => {
@@ -40,9 +42,7 @@ const registerDriver = async (req, res) => {
 
         if (await Driver.count() === 0) {
             await configureDatabaseIdStartValue();
-        }     
-
-        //console.log(req.body);
+        } 
 
         const {
             name,
@@ -61,8 +61,6 @@ const registerDriver = async (req, res) => {
         const filename = `${name}_${lastname}_${formattedDate}.jpeg`;
         
         const imageUrl = await saveImage(image, filename);
-
-        console.log("url: ",filename);
 
         const errors = [];
 
@@ -108,13 +106,31 @@ const registerDriver = async (req, res) => {
         const validTeams = resolvedTeams.filter((team) => team !== null);
         
         
-        
         if (teamId.length === 0) {
             errors.push('Not teams register');
         };
-        
+
+        const response = await axios.get('http://localhost:5000/drivers');
+        const list = response.data;
+        const existingDriverInApi = list.find((driver) => driver.name.forename === name && driver.name.surname === lastname);
+
+
+        const existingDriver = await Driver.findOne({
+            where: {
+                [Op.or]: [
+                    { name },
+                    { lastname }
+                ]
+            }
+        });
+
+        if (existingDriver || existingDriverInApi) {
+            errors.push('That driver already exists in the system');
+
+        }
+
         if (errors.length > 0) {
-            res.status(400).json({ errors });
+            res.status(400).json({ message: errors});
             return;
         }
         

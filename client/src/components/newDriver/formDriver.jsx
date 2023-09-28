@@ -64,22 +64,34 @@ function DriverRegistration() {
         }
     };  
     const handleSubmit = async (event) => {
-
         event.preventDefault();
         const hasErrors = Object.values(formErrors).some((error) => error !== '');
         if (hasErrors) {
-            console.error('El formulario tiene errores. No se puede enviar.');
+            alert('El formulario tiene errores. No se puede enviar.');
             return;
         }
-
+    
         try {
             const response = await services.newDriver(formData);
             dispatch(getDrivers());
-            console.log('Registro exitoso:', response);
+            alert('Registro exitoso:', response);
+            setFormData({
+                name: '',
+                lastname: '',
+                description: '',
+                nationality: '',
+                image: '',
+                birthdate: '',
+                teamId: []
+            });
         } catch (error) {
-            console.error('Error al registrar el conductor:', error);            
+            console.log(error.response.data.message);
+            const text = error.response.data.message.join(' ')
+            console.log(text);
+            alert(text);
         }
     };
+    
     useEffect(() => {
         const errors = validateForm();
         setFormErrors(errors);
@@ -102,15 +114,15 @@ function DriverRegistration() {
                         {formErrors.name && (<div>{formErrors.name}</div>)}
                     </label>
                     <label className={style.datalabelBox}>
-                        Apellido: <input className={style.inputBox} type="text" name="lastname" value={formData.lastname} onChange={handleChange} />
+                        Last name: <input className={style.inputBox} type="text" name="lastname" value={formData.lastname} onChange={handleChange} />
                         {formErrors.lastname && (<div>{formErrors.lastname}</div>)}
                     </label>
                     <label className={style.datalabelBox}>
-                        Descripción: <input className={style.inputBox} type="text" name="description" value={formData.description} onChange={handleChange} />
+                        Description: <input className={style.inputBox} type="text" name="description" value={formData.description} onChange={handleChange} />
                         {formErrors.description && (<div>{formErrors.description}</div>)}
                     </label>
                     <label className={style.datalabelBox}>
-                        Nacionalidad: 
+                        Nationality: 
                         <select className={style.selectBox} name="nationality" value={formData.nationality} onChange={handleChange}>
                             <option value="Not select">Not select</option>
                         {nationalityOptions.map((option) => (
@@ -122,11 +134,11 @@ function DriverRegistration() {
                         {formErrors.nationality && (<div>{formErrors.nationality}</div>)}
                     </label>
                     <label className={style.datalabelBox}>
-                        Fecha de Nacimiento: <input className={style.inputBox} type="date" name="birthdate" value={formData.birthdate} onChange={handleChange} />
+                        Birthdate: <input className={style.inputBox} type="date" name="birthdate" value={formData.birthdate} onChange={handleChange} />
                         {formErrors.birthdate && (<div>{formErrors.birthdate}</div>)}
                     </label>
                     <label className={style.datalabelBox}>
-                        Imagen: <input  type="file" accept="image/*" onChange={handleImageChange} />
+                        Image: <input  type="file" accept="image/*" onChange={handleImageChange} />
                         {formErrors.image && (<div>{formErrors.image}</div>)}
                     </label>
                 </div>
@@ -137,7 +149,7 @@ function DriverRegistration() {
 
                 <div className={style.loadBox}>
                     <label className={style.labelBox}>
-                        Equipo: 
+                        Teams: 
                         <select className={style.selectTeam} name="teamId" multiple value={formData.teamId} onChange={handleTeamChange}>
                             {teamOptions.map((option) => (
                                 <option key={option.value} value={option.value}>
@@ -147,7 +159,7 @@ function DriverRegistration() {
                         </select>
                         {formErrors.teamId && (<div>{formErrors.teamId}</div>)}
                     </label>
-                    <button className={style.buttonSubmit} type="submit" disabled={hasErrors}>Registrar Conductor</button>
+                    <button className={style.buttonSubmit} type="submit" disabled={hasErrors}>Register new driver</button>
                 </div>                
             </>
             </form>
