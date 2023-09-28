@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { DriverRegistration, LandingPage, HomePage, DetailPage, Nav } from "./components/index";
+import { DriverRegistration, LandingPage, HomePage, DetailPage, Nav , NationalityRegister} from "./components/index";
 import './App.css';
 
 function App() {
@@ -20,6 +20,7 @@ function App() {
           <Route path='/register' element={<DriverRegistration />} />
           <Route path='/home' element={<HomePage />} />
           <Route path='/detail/:id' element={<DetailPage />} />
+          <Route path='/nation' element={<NationalityRegister />} />
         </Routes>
       </div>
     </>

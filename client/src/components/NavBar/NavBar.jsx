@@ -20,6 +20,9 @@ function Nav() {
                 <NavLink to='/register'>
                     <button className={style.regButton}>Register a new legend</button>
                 </NavLink>
+                <NavLink to='/nation'>
+                    <button>test</button>
+                </NavLink>
             </div>
         </div>
     );

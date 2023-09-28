@@ -18,6 +18,21 @@ export async function newDriver(formData) {
         }
     }
 }
+export async function newNationality(formData) {
+    try {
+        console.log(formData);
+        const response = await axios.post(`${localEndpoint}nation`, formData);
+        return response.data;
+
+    } catch (localError) {
+        try {
+            const ipResponse = await axios.post(`${ipEndpoint}nation`, formData);
+            return ipResponse.data;
+        } catch (ipError) {
+            throw ipError;
+        }
+    }
+}
 
 export const getDetails = async (id) => {
     try {

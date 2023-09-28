@@ -67,14 +67,14 @@ function DriverRegistration() {
         event.preventDefault();
         const hasErrors = Object.values(formErrors).some((error) => error !== '');
         if (hasErrors) {
-            alert('El formulario tiene errores. No se puede enviar.');
+            alert('The form has errors. It can not be sent.');
             return;
         }
     
         try {
             const response = await services.newDriver(formData);
             dispatch(getDrivers());
-            alert('Registro exitoso:', response);
+            alert('Successful registration:', response);
             setFormData({
                 name: '',
                 lastname: '',
@@ -105,7 +105,7 @@ function DriverRegistration() {
     return (
         <>
         <div className={style.containerBox}>
-            <h2 className={style.title}>Registrar Nuevo Conductor</h2>
+            <h2 className={style.title}>Register New Driver</h2>
             <form className={style.formBox} onSubmit={handleSubmit}  encType="multipart/form-data">
             <>
                 <div className={style.dataBox}>
