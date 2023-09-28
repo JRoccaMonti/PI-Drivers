@@ -21,7 +21,7 @@ function Nav() {
                     <button className={style.regButton}>Register a new legend</button>
                 </NavLink>
                 <NavLink to='/nation'>
-                    <button>test</button>
+                    <button className={style.natButton}>Register a new nationaliti</button>
                 </NavLink>
             </div>
         </div>

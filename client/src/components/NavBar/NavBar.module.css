@@ -14,8 +14,14 @@
     left: 5px;
 }
 .regButton{
-    transform: scale(0.7);
+    transform: scale(0.6);
     position: absolute;
-    right: 10px;
+    right: -25px;
+    top: 4px;
+}
+.natButton{
+    transform: scale(0.6);
+    position: absolute;
+    right: 100px;
     top: 4px;
 }
