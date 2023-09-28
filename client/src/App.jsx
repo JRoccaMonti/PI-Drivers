@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { DriverRegistration, LandingPage, HomePage, DetailPage, Nav , NationalityRegister} from "./components/index";
+//import { DriverRegistration, LandingPage, HomePage, DetailPage, Nav , NationalityRegister} from "./components/index";
+import DriverRegistration from "./components/NewDriver/DriverRegistration.jsx";
+import LandingPage from "./components/LandingPage/LandigPage.jsx";
+import HomePage from "./components/HomePage/HomePage.jsx";
+import DetailPage from "./components/DetailPage/DetailPage.jsx";
+import Nav from "./components/NavBar/Nav.jsx";
+import NationalityRegister from "./components/NewNationality/NationalityRegister.jsx";
 import './App.css';
 
 function App() {

@@ -1,10 +1,10 @@
-import DriverRegistration from "./NewDriver/FormDriver.jsx";
-import LandingPage from "./LandingPage/Landig.jsx";
-import HomePage from "./HomePage/Home.jsx";
-import DetailPage from "./DetailPage/Detail.jsx";
+/*import DriverRegistration from "./NewDriver/DriverRegistration.jsx";
+import LandingPage from "./LandingPage/LandigPage.jsx";
+import HomePage from "./HomePage/HomePage.jsx";
+import DetailPage from "./DetailPage/DetailPage.jsx";
 import Card from "./Cards/Card.jsx";
-import Nav from "./NavBar/NavBar.jsx";
-import NationalityRegister from "./NewNationality/FormNationality.jsx";
+import Nav from "./NavBar/Nav.jsx";
+import NationalityRegister from "./NewNationality/NationalityRegister.jsx";
 
 export {
     NationalityRegister,
@@ -14,4 +14,4 @@ export {
     DetailPage,
     Card,
     Nav
-};
+};*/

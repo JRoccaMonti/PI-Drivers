@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Card } from "../index";
+//import { Card } from "../index";
+import Card from "../Cards/Card.jsx";
 import { applyFilter, getDriversName,orderCards } from "../../Redux/actions";
 import style from "./Home.module.css";
 
